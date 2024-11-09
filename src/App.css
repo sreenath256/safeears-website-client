@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  src: url(assets/fonts/rische-regular-webfont.woff2) format(woff2);
+  font-family: "riche-regular";
+  font-display: swap;
+}
+@font-face {
+  src: url(assets/fonts/Poppins-Light.woff2) format(woff2);
+  font-family: "poppins-light";
+  font-display: swap;
+}
+@font-face {
+  src: url(assets/fonts/Poppins-Regular.woff2) format(woff2);
+  font-family: "poppins-regular";
+  font-display: swap;
+}
+@font-face {
+  src: url(assets/fonts/Poppins-Medium.woff2) format(woff2);
+  font-family: "poppins-medium";
+  font-display: swap;
+}
+@font-face {
+  src: url(assets/fonts/Poppins-SemiBold.woff2) format(woff2);
+  font-family: "poppins-semibold";
+  font-display: swap;
+}
+@font-face {
+  src: url(assets/fonts/Poppins-Bold.woff2) format(woff2);
+  font-family: "poppins-bold";
+  font-display: swap;
+}
+
+:root {
+  --main-background:#fff;
+  --main-text:#000;
+}
+
+::-moz-selection {
+  color: #fff;
+  background: #007669
+}
+
+::selection {
+  color: #fff;
+  background: #007669
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  color: white;
+  /* background: #020202; */
+  background-image: url('./assets/earwebbg.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  font-family: "poppins-regular", sans-serif
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+img {
+  max-width: 100%;
+}
+input{
+  background-color: transparent;
+}
+::-webkit-scrollbar{
+width: 12px;
+background: rgb(27, 27, 27);
+}
+
+::-webkit-scrollbar-thumb{
+background:#444343;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+background:#4b4b4b;
+cursor: pointer;
+}
+
+.nav-bg{
+/* From https://css.glass */
+background: #ffffff6d;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(11.9px);
+-webkit-backdrop-filter: blur(11.9px);
+}
+
+
+
+
+.cart-scroll::-webkit-scrollbar{
+  width: 5px;
+  background: rgb(177, 177, 177);
+  }
+  
+  .cart-scroll::-webkit-scrollbar-thumb{
+    background: rgb(93, 91, 91);
+  
+  }
+  
+  .cart-scroll::-webkit-scrollbar-thumb:hover{
+    background: rgb(132, 130, 130);
+  cursor: pointer;
+  }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    border: 2px solid #d1d5db;
+    padding: 8px;
+    text-align: left;
+}
+
+
+.swiper-pagination-bullet {
+  margin-bottom: -15px !important;
+}
+.swiper-pagination-bullet-active {
+  background-color: #f8b133 !important;
+  
+}
