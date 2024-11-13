@@ -9,7 +9,7 @@ import { FaYoutube } from "react-icons/fa6";
 
 const ContactUs = () => {
   return (
-    <section className='w-11/12 xl:w-10/12 mx-auto py-10 h-full grid grid-cols-1 md:grid-cols-2 gap-y-10'>
+    <section className='w-11/12 xl:w-10/12 mx-auto h-full xl:h-[80vh] py-10 md:py-0 grid grid-cols-1 md:grid-cols-2 gap-y-10'>
       <div className='flex flex-col justify-center gap-5'>
         <div className='flex items-start gap-5'>
           <IoLocationOutline className='text-3xl'/>
@@ -28,8 +28,8 @@ const ContactUs = () => {
         </div>
         
       </div>
-      <div className='flex justify-center items-center'>
-        <img className='h-[300px] xl:h-[400px] object-cover' src={earaids} alt="" />
+      <div className='flex justify-center items-end'>
+        <img className='h-[300px] xl:h-[450px] object-contain' src={earaids} alt="" />
       </div>
     </section>
   )

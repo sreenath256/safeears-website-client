@@ -74,6 +74,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/shop",
+        element: (
+          <Suspense fallback={<p className='h-screen grid place-items-center'>Loading....</p>}>
+            <Shop/>
+          </Suspense>
+        ),
+      },
+      {
         path: "/under-construction",
         element: (
           <Suspense fallback={<p className='h-screen grid place-items-center'>Loading....</p>}>

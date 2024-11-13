@@ -11,6 +11,7 @@ import CartModal from './CartModal';
 
 const menuItems=[
   {title:`home`,url:`/`},
+  {title:`shop now`,url:`/shop`},
   {title:`about us`,url:`/about-us`},
   {title:`videos`,url:`/our-videos`},
   {title:`contact`,url:`/contact-us`},
@@ -76,24 +77,27 @@ const Header = () => {
   };
 
   return (
-    <nav className='w-11/12 py-5 mx-auto flex items-center justify-between '>
+    <nav className='w-11/12  py-5 mx-auto flex items-center justify-between z-[9999]'>
         <Link to={'/'}><img className='h-28 w-32 xl:w-48 object-contain ' src={logo} alt="safeears" /></Link>
         {/* large screen menu */}
-        <ul className='hidden xl:flex items-center gap-5'>
-          {menuItems?.map((menu,i)=>(
-            <>
-              <li className={`text-base font-medium uppercase text-white ${currentPathname === menu.url ? 'border-b border-white' : 'border-b border-transparent' }`} key={i}><Link to={menu.url}>{menu.title}</Link></li>{i < menuItems.length - 1 && <span className="text-gray-300">•</span>}
-            </>
-          ))}
-        </ul>
-        <div className='hidden xl:flex gap-5 items-center text-lg font-bold uppercase text-white'>
-          <Link>Login / Sign Up</Link>
-          <Link>track your order</Link>
-          <Link className='ml-10 relative'>
-            <span className='bg-black text-white h-5 w-5 absolute -top-4 rounded-full grid place-items-center left-2 text-xs'>3</span>
-            <BsCart4 onClick={toggleCartModal} className='text-3xl'/>
-          </Link>
-        </div>
+      <div className='flex md:flex-col xl:flex-row gap-y-3 gap-x-20'>
+        <ul className='hidden lg:flex items-center gap-5'>
+            {menuItems?.map((menu,i)=>(
+              <>
+                <li className={`text-base uppercase transition-all duration-200 text-white ${currentPathname === menu.url ? 'border-b-0 border-white font-semibold text-xl' : 'border-b-0 border-transparent font-medium' }`} key={i}><Link to={menu.url}>{menu.title}</Link></li>
+                {/* {i < menuItems.length - 1 && <span className="text-gray-300">•</span>} */}
+              </>
+            ))}
+          </ul>
+          <div className='hidden lg:flex gap-5 items-center text-lg font-bold uppercase text-white'>
+            <Link>Login / Sign Up</Link>
+            <Link>track your order</Link>
+            <Link className='ml-40 xl:ml-10 relative'>
+              <span className='bg-black text-white h-5 w-5 absolute -top-4 rounded-full grid place-items-center left-2 text-xs'>3</span>
+              <BsCart4 onClick={toggleCartModal} className='text-3xl'/>
+            </Link>
+          </div>
+      </div>
         {/* mobile menu */}
         <AnimatePresence>
           {open && (

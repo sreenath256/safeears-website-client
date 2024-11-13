@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {earandface,earaids,safewht,safeamz,safeflp} from '../assets'
 import { Link } from 'react-router-dom';
+import { HomeCarousal } from '../components';
 
 
 const HomePage = () => {
@@ -9,9 +10,9 @@ const HomePage = () => {
   return (
     <div className='w-11/12  mx-auto'>
 
-    <section className='grid grid-cols-1 md:grid-cols-2 gap-10 overflow-hidden py-10 md:py-0'>
-        <div className='grid grid-cols-5 gap-10'>
-          <div className='col-span-2 text-center'>
+    <section className='grid grid-cols-1 md:grid-cols-2 gap-10 overflow-hidden pt-5 md:pt-0 xl:-mt-20'>
+        <div className='grid grid-cols-1 xl:grid-cols-5 gap-5 md:gap-0 xl:gap-10'>
+          <div className='xl:col-span-2 h-full flex flex-col justify-center text-center'>
               <h1 className=' font-semibold'>Unit of GRAND VF PVT. LTD.</h1>
               <div className='flex flex-col gap-3 text-center  border-2 rounded-3xl w-full p-3'>
                   {/* <h3 className='text-3xl uppercase font-semibold'>shop now</h3> */}
@@ -20,8 +21,8 @@ const HomePage = () => {
                   {/* <Link to={'/under-construction'}><img className='h-20 object-contain rounded-2xl py-1 bg-white w-full' src={safeflp} alt="" /></Link> */}
               </div>
           </div>
-          <div className='col-span-3 text-center'>
-            <h1 className='text-6xl font-medium pb-2'>SAFE EARS</h1>
+          <div className='xl:col-span-3 h-full flex flex-col justify-center text-center'>
+            <h1 className='text-6xl md:text-4xl xl:text-6xl font-medium pb-2'>SAFE EARS</h1>
             <p className='text-base text-justify '>Safe Ears is a simple and a user friendly
               protective shield which can be placed around
               your ear while bathing , The safe ears is designed
@@ -34,7 +35,7 @@ const HomePage = () => {
           </div>
         </div>
         <div className=''>
-           carousal
+           <HomeCarousal/>
         </div>
     </section>
     </div>

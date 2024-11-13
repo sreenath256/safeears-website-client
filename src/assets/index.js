@@ -1,5 +1,5 @@
 import logo from './logos/safenewlogo.webp';
-import earaids from './images/new/earss.webp';
+import earaids from './new/b1.webp';
 import earface from './images/new/earface.webp';
 import earandface from './images/new/earface.webp';
 import usrimage from './images/usr.jpg';
