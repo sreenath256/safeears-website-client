@@ -23,7 +23,7 @@ const HomePage = () => {
           </div>
           <div className='xl:col-span-3 h-full flex flex-col justify-center text-center'>
             <h1 className='text-6xl md:text-4xl xl:text-6xl font-medium pb-2'>SAFE EARS</h1>
-            <p className='text-base text-justify '>Safe Ears is a simple and a user friendly
+            <p className='text-base text-justify tracking-tight'>Safe Ears is a simple and a user friendly
               protective shield which can be placed around
               your ear while bathing , The safe ears is designed
               in such a way that water does not sweep inside

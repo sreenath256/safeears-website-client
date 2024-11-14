@@ -1,21 +1,16 @@
 import React, { useState } from "react";
 import { earaids } from "../assets";
-
-const Products = [
-  
-];
-
-
+import { Products } from "../components";
 
 
 const Shop = () => {
 
 
   return (
-    <section className="w-11/12 xl:w-10/12 mx-auto h-full xl:h-[80vh] overflow-hidden pt-10 md:pt-0">
+    <section className="w-11/12 xl:w-10/12 mx-auto h-full  overflow-hidden pt-10 md:pt-0 ">
       <div className="flex flex-col-reverse gap-y-10 lg:flex-row h-full w-full">
-          <div className="basis-1/2 flex justify-center items-end h-full ">
-            <img className="h-[500px] object-contain -mb-14 md:-mb-0" src={earaids} alt="" />
+          <div className="basis-1/2 flex justify-center items-end h-full border-b-4 border-main">
+            <img className="h-[500px] object-contain" src={earaids} alt="" />
           </div>
           <div className="basis-1/2 grid grid-cols-1 md:grid-cols-2 place-items-center gap-y-10">
             {/* 1 */}
@@ -68,11 +63,21 @@ const Shop = () => {
               </div>
               {/* 2 */}
               
-              <div className="md:col-span-2 grid place-items-center w-full h-full ">
-                <button className="bg-main text-black px-10 py-2 rounded-3xl font-semibold uppercase text-2xl ">shop now</button>
-              </div>
+
+            <div className="md:col-span-2 grid place-items-center w-full h-full ">
+              <a href="#prod" className="bg-main hover:bg-yellow-600 duration-300 text-black px-10 py-2 rounded-3xl font-semibold uppercase text-2xl ">shop now</a>
+            </div>
+             
           </div>
       </div>
+
+      <div className="py-10 xl:py-20" id="prod">
+        <Products/>
+      </div>
+
+      <div className=" grid place-items-center w-full h-full pb-10">
+                <button className="bg-main hover:bg-yellow-600 duration-300 text-black px-10 py-2 rounded-3xl font-semibold uppercase text-2xl ">go to cart</button>
+        </div>
     </section>
   );
 };
