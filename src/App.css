@@ -47,20 +47,27 @@
   color: #fff;
   background: #e6ae4a
 }
-
+html{
+  scroll-behavior: smooth;
+}
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
+/* bg-gradient-to-r from-[#007669] via-[#00726f] to-[#006b7c] */
 body{
   color: white;
   /* background: #020202; */
-  background-image: url('./assets/earwebbg.png');
-  background-repeat: no-repeat;
+  background: 
+    linear-gradient(#007669, #00726f), /* Gradient 1 */
+    linear-gradient(#00726f, #006b7c); /* Gradient 2 */
+  background-image: 
+    url('./assets/earwebbg.png'); /* Background image */
+  background-blend-mode: overlay; /* Ensures image and gradient blend */
   background-size: cover;
   background-position: center;
+  background-attachment: fixed; 
   font-family: "poppins-regular", sans-serif
 }
 

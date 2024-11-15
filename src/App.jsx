@@ -20,10 +20,10 @@ const About = lazy(() => import("./pages/about-us"));
 const Contact = lazy(() => import("./pages/contact-us"));
 const OurVideos = lazy(() => import("./pages/video"));
 const Shop = lazy(() => import("./pages/shop"));
+const Product = lazy(() => import("./pages/product"));
 const Terms = lazy(() => import("./pages/termsandconditions"));
 const PrivacyPage = lazy(() => import("./pages/privacy"));
 const Checkout = lazy(() => import("./pages/checkout"));
-// const Success = lazy(() => import("./pages/Success"));
 const Construct = lazy(() => import("./pages/constr"));
 
 // Admin Routes
@@ -42,7 +42,7 @@ const Layout = () => {
     <>
       <ScrollToTop />
       <ToastContainer />
-      <div className="2xl:max-w-[2200px] mx-auto min-h-screen flex justify-between flex-col">
+      <div className="2xl:max-w-[2200px] mx-auto min-h-screen flex justify-between flex-col ">
       {!hideHeaderFooter  &&<Header/>}
       <Hubspot/>
         <Outlet />
@@ -78,6 +78,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<p className='h-screen grid place-items-center'>Loading....</p>}>
             <Shop/>
+          </Suspense>
+        ),
+      },
+      {
+        path: "/shop/:title",
+        element: (
+          <Suspense fallback={<p className='h-screen grid place-items-center'>Loading....</p>}>
+            <Product/>
           </Suspense>
         ),
       },
