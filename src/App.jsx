@@ -21,6 +21,7 @@ const Contact = lazy(() => import("./pages/contact-us"));
 const OurVideos = lazy(() => import("./pages/video"));
 const Shop = lazy(() => import("./pages/shop"));
 const Product = lazy(() => import("./pages/product"));
+const Orders = lazy(() => import("./pages/orders"));
 const Terms = lazy(() => import("./pages/termsandconditions"));
 const PrivacyPage = lazy(() => import("./pages/privacy"));
 const Checkout = lazy(() => import("./pages/checkout"));
@@ -86,6 +87,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<p className='h-screen grid place-items-center'>Loading....</p>}>
             <Product/>
+          </Suspense>
+        ),
+      },
+      {
+        path: "/orders",
+        element: (
+          <Suspense fallback={<p className='h-screen grid place-items-center'>Loading....</p>}>
+            <Orders/>
           </Suspense>
         ),
       },

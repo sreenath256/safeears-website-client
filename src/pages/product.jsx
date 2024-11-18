@@ -49,7 +49,7 @@ function ProductPage() {
             keep your ears dry
           </span>
         </div>
-        <div className="flex flex-col items-center md:items-start gap-2 md:gap-1">
+        <div className="flex flex-col items-center gap-2 md:gap-1">
           <p className="text-xs font-medium flex gap-1 capitalize items-center">
             <IoIosStar className="text-main text-base" />
             Be first to review
@@ -98,9 +98,9 @@ function ProductPage() {
               <GoPlus />
             </button>
           </div>
-          <button className="text-base text-black bg-main hover:bg-yellow-600 duration-200 w-full px-5 py-2 rounded-xl capitalize font-semibold">
+          <Link to={'/orders'} className="text-base text-black bg-main hover:bg-yellow-600 duration-200 w-full px-5 py-2 rounded-xl capitalize font-semibold">
             place your order
-          </button>
+          </Link>
         </div>
       </div>
 
