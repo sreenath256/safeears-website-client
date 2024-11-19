@@ -1,6 +1,14 @@
 import { useState } from "react";
+import prod1 from '../assets/new/brel.png'
+import { IoIosStar } from "react-icons/io";
+import { FaRupeeSign } from "react-icons/fa";
+import { FiMinus } from "react-icons/fi";
+import { GoPlus } from "react-icons/go";
+import { BsFillTrash3Fill } from "react-icons/bs";
+
 
 const PlaceOrderAccordion = () => {
+  const [quantity, setQuantity] = useState(1);
   const [activeStep, setActiveStep] = useState(1);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
 
@@ -10,8 +18,25 @@ const PlaceOrderAccordion = () => {
     }
   };
 
+  const incrementQuantity = () => {
+    if (quantity < 6) {
+      setQuantity(prev => prev + 1);
+    }
+  };
+
+  const decrementQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(prev => prev - 1);
+    }
+  };
+
+  const handleBackClick = () => {
+    navigate(-1);  // Go back to the previous page
+  };
+
+
   return (
-    <div className="w-[50%] mx-auto p-10 bg-white text-black rounded-[2rem] shadow-lg flex flex-col gap-2 my-10">
+    <div className="w-[95%] md:w-[80%] xl:w-[50%] mx-auto p-3 xl:p-10 bg-white text-black md:rounded-xl xl:rounded-[2rem] shadow-lg flex flex-col gap-2 my-10">
       {/* Step 1 */}
       <div>
         <div
@@ -79,7 +104,7 @@ const PlaceOrderAccordion = () => {
         </div>
         {activeStep === 2 && (
           <div className="p-4 border border-t-0 border-main flex flex-col items-center gap-5">
-            <form className="grid grid-cols-2 gap-3 w-full">
+            <form className="grid grid-cols-1 md:grid-cols-2 gap-y-5 gap-3 w-full">
                 <input className="border p-2 py-3 outline-none" type="text" placeholder="Name"/>
                 <input className="border p-2 py-3 outline-none" type="text" placeholder="10-digit mobile number"/>
                 <input className="border p-2 py-3 outline-none" type="text" placeholder="Pincode"/>
@@ -121,8 +146,98 @@ const PlaceOrderAccordion = () => {
         </div>
         {activeStep === 3 && (
           <div className="p-4 border border-t-0 border-main flex flex-col items-center gap-5">
-            <div>
-            
+            <div className="divide-y-2 space-y-10">
+                <div className="flex flex-col md:flex-row gap-5 items-center">
+                    <div className="overflow-hidden h-full w-full md:h-48 md:w-48 relative rounded-2xl">
+                        <img
+                          className="w-full h-full object-cover rounded-2xl hover:opacity-90 duration-300"
+                          src={prod1}
+                          alt=""
+                          loading="lazy"
+                        />
+                        <span className="absolute text-base md:text-xs w-full py-2 xl:py-1 text-center capitalize font-semibold bottom-0 right-0 bg-main text-black">
+                          keep your ears dry
+                        </span>
+                    </div>
+                    <div className="flex flex-col items-center gap-2 md:gap-1">
+                          <p className="text-xs font-medium flex gap-1 capitalize items-center">
+                            <IoIosStar className="text-main text-base" />
+                            Be first to review
+                          </p>
+                          <h1 className="text-lg font-semibold capitalize cursor-pointer">
+                            Transparent Right
+                          </h1>
+                          <div className="flex  font-bold gap-2 text-base">
+                            <p className="flex">
+                              <FaRupeeSign /> 999
+                            </p>
+                            <div className="relative text-gray-400 flex">
+                              <FaRupeeSign /> 1999
+                              <span className="absolute top-[40%] left-0 rotate-12 h-[1.5px] w-full bg-red-400"></span>
+                            </div>
+                            <p className="text-[#69b886]">30 % off</p>
+                          </div>
+                          <div className="text-center text-sm font-bold text-[#69b886] capitalize">
+                            <p className="text-xs">in Stock</p>
+                            <div className="h-[2px] w-full bg-gray-300 mb-1" />
+                            <p className="text-[#69b886] uppercase">regular size</p>
+                          </div>
+                          <button className="text-xs text-white bg-black hover:bg-main duration-200 w-full py-2 rounded-lg capitalize font-medium">
+                            add to cart
+                          </button>
+                        </div>
+
+                        <div className="flex flex-col items-center gap-5" >
+                            <div className="flex border rounded-lg overflow-hidden">
+                              <button
+                                className={`w-7 grid place-items-center h-7 ${
+                                  quantity === 1 ? "bg-gray-300 cursor-not-allowed" : "bg-gray-200 hover:bg-gray-300 cursor-pointer"
+                                } duration-200`}
+                                onClick={decrementQuantity}
+                                disabled={quantity === 1}
+                              >
+                                <FiMinus />
+                              </button>
+                              <span className="w-7 grid place-items-center h-7">{quantity}</span>
+                              <button
+                                className={`w-7 grid place-items-center h-7 ${
+                                  quantity === 6 ? "bg-gray-300 cursor-not-allowed" : "bg-gray-200 hover:bg-gray-300 cursor-pointer"
+                                } duration-200`}
+                                onClick={incrementQuantity}
+                                disabled={quantity === 6}
+                              >
+                                <GoPlus />
+                              </button>
+                            </div>
+                            <button>
+                              <BsFillTrash3Fill className="text-3xl hover:text-red-500 duration-300"  />
+                            </button>
+                        </div>
+                </div>
+                <div className="py-5 divide-y-2 divide-gray-100">
+                  <h3 className="text-gray-500 text-xl pb-3 font-semibold">Price Details</h3>
+                  <div className="flex justify-between items-center py-3 text-black">
+                    <p className=" text-sm ">Price (1 item)</p>
+                    <p className="flex items-center "><FaRupeeSign/>999</p>
+                  </div>
+                  <div className="flex justify-between items-center py-3 text-black">
+                    <p className=" text-sm ">Delivery Charges</p>
+                    <div className="flex gap-1">
+                      <div className="relative  flex">
+                                <FaRupeeSign /> 80
+                                <span className="absolute top-[40%] left-0 rotate-12 h-[1.5px] w-full bg-red-400"></span>
+                      </div>
+                      <span className="text-green-500 font-bold">Free</span>
+                    </div>
+                  </div>
+                  <div className="pt-5">
+                      <div className="flex justify-between items-center">
+                        <p className="font-semibold text-xl">Total Payable</p>
+                        <p className="flex items-center "><FaRupeeSign/>999</p>
+                      </div>
+                      <p className="text-green-600 pt-2 font-semibold flex items-center">Your Total Saving on this order <FaRupeeSign/>999</p>
+                  </div>
+                </div>
             </div>
             <button
               className="w-fit px-5 bg-main text-black font-semibold py-2 rounded-md"
@@ -152,7 +267,7 @@ const PlaceOrderAccordion = () => {
           <div className="p-4 border border-t-0 border-main flex flex-col items-center gap-2">
             <p>Choose your payment method here.</p>
             <button
-              className="w-fit px-5 bg-main text-black font-semibold py-2 rounded-md"
+              className="w-fit px-10 bg-green-500 text-white font-semibold py-2 rounded-md"
               onClick={goToNextStep}
             >
               Pay

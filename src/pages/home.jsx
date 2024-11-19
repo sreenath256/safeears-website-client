@@ -16,9 +16,9 @@ const HomePage = () => {
               <h1 className=' font-semibold'>Unit of GRAND VF PVT. LTD.</h1>
               <div className='flex flex-col gap-3 text-center  border-2 rounded-3xl w-full p-3'>
                   {/* <h3 className='text-3xl uppercase font-semibold'>shop now</h3> */}
-                  <a href='https://wa.me/919207066699' target='_blank'><img className='h-16 object-contain rounded-2xl py-1 bg-white w-full' src={safewht} alt="" /></a>
-                  <a href='https://amzn.in/d/bEjLF1S' target='_blank'><img className='h-16 object-contain rounded-2xl py-1 bg-white w-full' src={safeamz} alt="" /></a>
-                  {/* <Link to={'/under-construction'}><img className='h-20 object-contain rounded-2xl py-1 bg-white w-full' src={safeflp} alt="" /></Link> */}
+                  <a href='https://wa.me/919207066699' target='_blank'><img className='h-16 object-contain rounded-2xl py-1 bg-white hover:bg-gray-200 duration-300 w-full' src={safewht} alt="" /></a>
+                  <a href='https://amzn.in/d/bEjLF1S' target='_blank'><img className='h-16 object-contain rounded-2xl py-1 bg-white hover:bg-gray-200 duration-300 w-full' src={safeamz} alt="" /></a>
+                  <a href='#'><img className='h-16 object-contain rounded-2xl py-1 bg-white hover:bg-gray-200 duration-300 w-full' src={safeflp} alt="" /></a>
               </div>
           </div>
           <div className='xl:col-span-3 h-full flex flex-col justify-center text-center'>

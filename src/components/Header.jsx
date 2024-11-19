@@ -7,7 +7,7 @@ import { BsCart4 } from "react-icons/bs";
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { MdClose } from 'react-icons/md';
-import CartModal from './CartModal';
+import CartModal from './Cartmodal';
 
 const menuItems=[
   {title:`home`,url:`/`},
@@ -21,13 +21,12 @@ const Header = () => {
   const location = useLocation();
   const currentPathname = location.pathname;
   const [open, setOpen] = useState(false);
-  const menuRef = useRef(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const menuRef = useRef(null);
 
-  const toggleCartModal = () => {
+  const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
   };
-
 
   const handleClickOutside = (event) => {
     if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -51,7 +50,7 @@ const Header = () => {
     setOpen((prevOpen) => !prevOpen);
   };
 
-  open
+  open || isCartOpen
   ? (document.body.style.overflow = "hidden")
   : (document.body.style.overflow = "unset");
 
@@ -78,7 +77,7 @@ const Header = () => {
 
   return (
     <nav className='w-11/12  py-5 mx-auto flex items-center justify-between z-[9999]'>
-        <Link to={'/'}><img className='h-28 w-32 xl:w-48 object-contain ' src={logo} alt="safeears" /></Link>
+        <Link to={'/'}><img className='h-20 w-28 xl:w-48 object-contain ' src={logo} alt="safeears" /></Link>
         {/* large screen menu */}
       <div className='flex md:flex-col xl:flex-row gap-y-3 gap-x-20'>
         <ul className='hidden lg:flex items-center gap-5'>
@@ -94,7 +93,7 @@ const Header = () => {
             <Link>track your order</Link>
             <Link className='ml-40 xl:ml-10 relative'>
               <span className='bg-black text-white h-5 w-5 absolute -top-4 rounded-full grid place-items-center left-2 text-xs'>3</span>
-              <BsCart4 onClick={toggleCartModal} className='text-3xl'/>
+              <BsCart4 onClick={toggleCart} className='text-3xl'/>
             </Link>
           </div>
       </div>
@@ -107,7 +106,7 @@ const Header = () => {
               initial="initial"
               animate="animate"
               exit="exit"
-              className="fixed lg:hidden left-0 top-0 w-full h-fit pt-20 rounded-b-[2rem] origin-top bg-white text-main p-10 z-[99999]"
+              className="fixed lg:hidden left-0 top-0 w-full h-fit pt-20 rounded-b-[2rem] origin-top bg-white text-main p-10 z-[9999]"
             >
               <motion.div
                initial={{ opacity: 0, rotate:90 }}
@@ -136,16 +135,16 @@ const Header = () => {
                 transition={{ duration: 0.3 }}
                 className="flex flex-col h-full justify-center  items-center gap-3 md:gap-4 "
               >
-               <div className='overflow-hidden flex flex-col gap-2 text-center font-semibold capitalize text-xl'>
+               <div className='overflow-hidden flex flex-col gap-5 text-center font-semibold capitalize text-xl'>
                {menuItems?.map((menu,i)=>(
                  <Link onClick={()=> setOpen(false)} className="hover:underline" to={menu.url}>{menu.title}</Link>
                ))}
-               <div className='flex flex-col gap-2 items-center'>
+               <div className='flex flex-col gap-5 items-center'>
                 <Link>Login / Sign Up</Link>
                 <Link>track your order</Link>
                 <Link className='mt-5 relative'>
                   <span className='bg-black text-white h-5 w-5 absolute -top-4 rounded-full grid place-items-center left-2 text-xs'>3</span>
-                  <BsCart4  className='text-3xl'/>
+                  <BsCart4 onClick={toggleCart} className='text-3xl'/>
                 </Link>
                </div>
                </div>
@@ -163,7 +162,7 @@ const Header = () => {
        </div>
 
         {/*  */}
-        <CartModal isOpen={isCartOpen} onClose={toggleCartModal} />
+        <CartModal isOpen={isCartOpen} onClose={toggleCart} />
     </nav>
   )
 }

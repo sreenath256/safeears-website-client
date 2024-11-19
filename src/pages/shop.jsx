@@ -10,7 +10,7 @@ const Shop = () => {
     <section className="w-11/12 xl:w-10/12 mx-auto h-full  overflow-hidden pt-10 md:pt-0 ">
       <div className="flex flex-col-reverse gap-y-10 lg:flex-row h-full w-full">
           <div className="basis-1/2 flex justify-center items-end h-full border-b-4 border-main">
-            <img className="h-[500px] object-contain" src={earaids} alt="" loading="lazy" />
+            <img className="h-[500px] object-contain object-bottom" src={earaids} alt="" loading="lazy" />
           </div>
           <div className="basis-1/2 grid grid-cols-1 md:grid-cols-2 place-items-center gap-y-10">
             {/* 1 */}

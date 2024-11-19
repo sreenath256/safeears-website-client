@@ -11,7 +11,7 @@ import {allProducts} from './data'
 const Products = () => {
     const navigate = useNavigate('');
   return (
-    <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 place-items-center gap-5 md:gap-10 xl:gap-5 text-black'>
+    <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 place-items-center gap-5 md:gap-10 xl:gap-5 text-black'>
         {allProducts?.map((dt,i)=>(
         <div className='bg-white w-full h-full px-5 py-2 rounded-2xl flex justify-center items-center gap-10 md:gap-5 xl:gap-3' key={i}>
              <div onClick={() => navigate(`/shop/${dt?.title}`)} className='cursor-pointer group overflow-hidden h-28 w-28 relative rounded-2xl'>

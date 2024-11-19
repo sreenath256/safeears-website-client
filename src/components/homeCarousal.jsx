@@ -69,7 +69,7 @@ const ImageCarousel = () => {
   };
 
   return (
-    <div className="pt-5 relative">
+    <div className="pt-8 relative">
       <Slider {...settings}>
         {images.map((image, index) => (
           <div
