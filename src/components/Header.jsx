@@ -7,7 +7,7 @@ import { BsCart4 } from "react-icons/bs";
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { MdClose } from 'react-icons/md';
-import CartModal from './Cartmodal';
+import CartModal from '../components/Cartmodal';
 
 const menuItems=[
   {title:`home`,url:`/`},
