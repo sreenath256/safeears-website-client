@@ -4,9 +4,11 @@ import {uklgo,indlgo} from '../assets'
 import { FaFacebook } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Footer = () => {
+  const { pathname } = useLocation();
+  if (pathname === "/login") return null;
   return (
     <footer className="border-t-4 border-main py-5 flex items-center">
 

@@ -19,10 +19,13 @@ const menuItems=[
 
 const Header = () => {
   const location = useLocation();
+  const { pathname } = useLocation();
+  if (pathname === "/login") return null;
   const currentPathname = location.pathname;
   const [open, setOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const menuRef = useRef(null);
+
 
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
@@ -89,7 +92,7 @@ const Header = () => {
             ))}
           </ul>
           <div className='hidden lg:flex gap-5 items-center text-base font-bold uppercase text-white'>
-            <Link>Login / Sign Up</Link>
+            <Link to={'/login'}>Login / Sign Up</Link>
             <Link>track your order</Link>
             <Link className='ml-40 xl:ml-10 relative'>
               <span className='bg-black text-white h-5 w-5 absolute -top-4 rounded-full grid place-items-center left-2 text-xs'>3</span>
@@ -140,7 +143,7 @@ const Header = () => {
                  <Link onClick={()=> setOpen(false)} className="hover:underline" to={menu.url}>{menu.title}</Link>
                ))}
                <div className='flex flex-col gap-5 items-center'>
-                <Link>Login / Sign Up</Link>
+                <Link to={'/login'}>Login / Sign Up</Link>
                 <Link>track your order</Link>
                 <Link className='mt-5 relative'>
                   <span className='bg-black text-white h-5 w-5 absolute -top-4 rounded-full grid place-items-center left-2 text-xs'>3</span>
