@@ -1,0 +1,73 @@
+import React, { useState } from "react";
+import { IoLogOutOutline } from "react-icons/io5";
+
+export default function TopBar({ setIsSidebarOpen }) {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  return (
+    <header className="flex items-center justify-between px-4 py-2 bg-black shadow-md lg:justify-end">
+      <button
+        className="p-2 text-gray-600 bg-gray-200 rounded-md lg:hidden"
+        onClick={() => setIsSidebarOpen(true)}
+      >
+        <svg
+          className="w-6 h-6"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M4 6h16M4 12h16m-7 6h7"
+          />
+        </svg>
+      </button>
+
+      <div className="relative">
+        <button
+          className="flex items-center p-2 space-x-2 bg-white rounded-full focus:outline-none"
+          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+        >
+          <img
+            className="w-8 h-8 rounded-full"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEytaU1okXcPwqLgAzwfDimvvYST7la-GGYw&s"
+            alt="Profile"
+          />
+          <span className="hidden text-sm font-medium text-gray-700 lg:block">
+            Admin
+          </span>
+          <svg
+            className="w-4 h-4 text-gray-700"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </button>
+
+        {isDropdownOpen && (
+          <div className="absolute right-0 w-fit mt-2 bg-white border border-gray-200 rounded-md shadow-lg">
+            
+            <button
+              onClick={() => alert("Logged out!")}
+              className="w-full px-4 py-2 text-sm text-left text-red-600 hover:bg-gray-100 flex gap-2 items-center"
+            >
+              Logout
+              <IoLogOutOutline/>
+            </button>
+          </div>
+        )}
+      </div>
+    </header>
+  );
+}

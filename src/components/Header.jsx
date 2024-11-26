@@ -22,6 +22,7 @@ const Header = () => {
   const { pathname } = useLocation();
   if (pathname === "/login") return null;
   const currentPathname = location.pathname;
+  const [isAdminView, setIsAdminView] = useState(false); //  admin view
   const [open, setOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const menuRef = useRef(null);
@@ -91,14 +92,24 @@ const Header = () => {
               </>
             ))}
           </ul>
-          <div className='hidden lg:flex gap-5 items-center text-base font-bold uppercase text-white'>
-            <Link to={'/login'}>Login / Sign Up</Link>
-            <Link>track your order</Link>
-            <Link className='ml-40 xl:ml-10 relative'>
-              <span className='bg-black text-white h-5 w-5 absolute -top-4 rounded-full grid place-items-center left-2 text-xs'>3</span>
-              <BsCart4 onClick={toggleCart} className='text-3xl'/>
-            </Link>
-          </div>
+         <div className='hidden lg:block'>
+          {!isAdminView ? (
+              <div className='flex gap-5 items-center text-base font-bold uppercase text-white'>
+              <Link to={'/login'}>Login / Sign Up</Link>
+              <Link>track your order</Link>
+              <Link className='ml-40 xl:ml-10 relative'>
+                <span className='bg-black text-white h-5 w-5 absolute -top-4 rounded-full grid place-items-center left-2 text-xs'>3</span>
+                <BsCart4 onClick={toggleCart} className='text-3xl'/>
+              </Link>
+            </div>
+            ) :  (
+              <div className='flex gap-3 items-center uppercase text-sm'>
+                <Link to='/profile'><img className='h-10 w-10 rounded-full object-cover border-2' src="https://images.pexels.com/photos/3785077/pexels-photo-3785077.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" /></Link>
+                <Link to='/profile'>My Account</Link>
+              </div>
+            ) }
+         </div>
+          
       </div>
         {/* mobile menu */}
         <AnimatePresence>
@@ -142,14 +153,24 @@ const Header = () => {
                {menuItems?.map((menu,i)=>(
                  <Link onClick={()=> setOpen(false)} className="hover:underline" to={menu.url}>{menu.title}</Link>
                ))}
-               <div className='flex flex-col gap-5 items-center'>
-                <Link to={'/login'}>Login / Sign Up</Link>
-                <Link>track your order</Link>
-                <Link className='mt-5 relative'>
-                  <span className='bg-black text-white h-5 w-5 absolute -top-4 rounded-full grid place-items-center left-2 text-xs'>3</span>
-                  <BsCart4 onClick={toggleCart} className='text-3xl'/>
-                </Link>
-               </div>
+                <div className=''>
+                  {!isAdminView ? (
+                     <div className='flex flex-col gap-5 items-center'>
+                     <Link to={'/login'}>Login / Sign Up</Link>
+                     <Link>track your order</Link>
+                     <Link className='mt-5 relative'>
+                       <span className='bg-black text-white h-5 w-5 absolute -top-4 rounded-full grid place-items-center left-2 text-xs'>3</span>
+                       <BsCart4 onClick={toggleCart} className='text-3xl'/>
+                     </Link>
+                   </div>
+                    ) :  (
+                      <div className='flex gap-3 items-center '>
+                        <Link to='/profile'><img className='h-10 w-10 rounded-full object-cover border-2' src="https://images.pexels.com/photos/3785077/pexels-photo-3785077.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" /></Link>
+                        <Link to='/profile'>My Account</Link>
+                      </div>
+                    ) }
+                </div>
+                 
                </div>
               </motion.div>
             </motion.div>

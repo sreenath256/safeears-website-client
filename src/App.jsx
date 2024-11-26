@@ -1,20 +1,17 @@
-import './App.css'
+import "./App.css";
 import { ScrollToTop } from "react-router-scroll-to-top";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { lazy, Suspense, useState, useEffect } from "react";
+import { lazy, Suspense, useState } from "react";
 import {
   createBrowserRouter,
   RouterProvider,
   Outlet,
   useLocation,
-  // useNavigate,
 } from "react-router-dom";
-import {Header,Footer,Hubspot} from './components';
+import { Header, Footer, Hubspot,PageLoader } from "./components";
 
-
-// main Routes
-
+// Pages
 const Home = lazy(() => import("./pages/home"));
 const About = lazy(() => import("./pages/about-us"));
 const Contact = lazy(() => import("./pages/contact-us"));
@@ -23,136 +20,121 @@ const Shop = lazy(() => import("./pages/shop"));
 const Product = lazy(() => import("./pages/product"));
 const Orders = lazy(() => import("./pages/orders"));
 const LoginPage = lazy(() => import("./pages/loginPage"));
-const Terms = lazy(() => import("./pages/termsandconditions"));
-const PrivacyPage = lazy(() => import("./pages/privacy"));
-const Checkout = lazy(() => import("./pages/checkout"));
 const Construct = lazy(() => import("./pages/constr"));
+const Profile = lazy(() => import("./pages/profile"));
+const PagenotFound = lazy(() => import("./pages/pageNot"));
 
-// Admin Routes
+// Admin Pages
+
+const AdminNav = lazy(() => import("./pages/admin/layout/Navbar"));
+const AdminSidebar = lazy(() => import("./pages/admin/layout/Sidebar"));
 const AdminLogin = lazy(() => import("./pages/admin/AdminLogin"));
 const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
-const AdminOrders = lazy(() => import("./pages/admin/orders"));
-const AdminProducts = lazy(() => import("./pages/admin/products"));
+const AdminOrders = lazy(() => import("./pages/admin/Orders"));
+const AdminOrder = lazy(() => import("./pages/admin/Order"));
+const AdminProducts = lazy(() => import("./pages/admin/Products"));
+const AddProduct = lazy(() => import("./pages/admin/AddProduct"));
 
-
-const Layout = () => {
+// Admin Layout
+const AdminLayout = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
-  const hideHeaderFooterPaths = ['/order-success','/admin', '/dashboard','/dashboard/products','/dashboard/orders'];
-  const hideHeaderFooter = hideHeaderFooterPaths.includes(location.pathname);
+
+  // Determine if the current route is the login page
+  const isLoginPage = location.pathname === "/";
 
   return (
     <>
       <ScrollToTop />
       <ToastContainer />
-      <div className="2xl:max-w-[2200px] mx-auto min-h-screen flex justify-between flex-col ">
-      {!hideHeaderFooter  &&<Header/>}
-      <Hubspot/>
-        <Outlet />
-        {!hideHeaderFooter  &&<Footer/>}
+      <div className="flex h-screen bg-gray-100 text-black w-full">
+        {/* Conditionally render Sidebar */}
+        {!isLoginPage && (
+          <AdminSidebar
+            isSidebarOpen={isSidebarOpen}
+            setIsSidebarOpen={setIsSidebarOpen}
+          />
+        )}
+
+        {/* Main Content */}
+        <div className="flex flex-col flex-1 w-full">
+          {/* Conditionally render Top Bar */}
+          {!isLoginPage && <AdminNav setIsSidebarOpen={setIsSidebarOpen} />}
+
+          {/* Main body */}
+          <div className="flex-1 p-4 overflow-y-scroll w-full">
+            <Outlet />
+          </div>
+        </div>
       </div>
     </>
   );
 };
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Layout />,
-    children: [
-      {
-        path: "*",
-        element: (
-          <Suspense fallback={<p className='h-screen grid place-items-center'>Loading....</p>}>
-            <div className='h-[60vh] w-full overflow-hidden grid place-items-center capitalize animate-pulse'>page not found</div>
-          </Suspense>
-        ),
-      },
-      {
-        path: "/",
-        element: (
-          <Suspense fallback={<p className='h-screen grid place-items-center'>Loading....</p>}>
-            <Home/>
-          </Suspense>
-        ),
-      },
-      {
-        path: "/login",
-        element: (
-          <Suspense fallback={<p className='h-screen grid place-items-center'>Loading....</p>}>
-            <LoginPage/>
-          </Suspense>
-        ),
-      },
-      {
-        path: "/shop",
-        element: (
-          <Suspense fallback={<p className='h-screen grid place-items-center'>Loading....</p>}>
-            <Shop/>
-          </Suspense>
-        ),
-      },
-      {
-        path: "/shop/:title",
-        element: (
-          <Suspense fallback={<p className='h-screen grid place-items-center'>Loading....</p>}>
-            <Product/>
-          </Suspense>
-        ),
-      },
-      {
-        path: "/orders",
-        element: (
-          <Suspense fallback={<p className='h-screen grid place-items-center'>Loading....</p>}>
-            <Orders/>
-          </Suspense>
-        ),
-      },
-      {
-        path: "/under-construction",
-        element: (
-          <Suspense fallback={<p className='h-screen grid place-items-center'>Loading....</p>}>
-            <Construct/>
-          </Suspense>
-        ),
-      },
-      {
-        path: "/about-us",
-        element: (
-          <Suspense fallback={<p className='h-screen grid place-items-center'>Loading....</p>}>
-            <About/>
-          </Suspense>
-        ),
-      },
-      {
-        path: "/our-videos",
-        element: (
-          <Suspense fallback={<p className='h-screen grid place-items-center'>Loading....</p>}>
-            <OurVideos/>
-          </Suspense>
-        ),
-      },
-      {
-        path: "/contact-us",
-        element: (
-          <Suspense fallback={<p className='h-screen grid place-items-center'>Loading....</p>}>
-            <Contact/>
-          </Suspense>
-        ),
-      },
-      
-     
-      
-    ],
-  },
-]);
-
-
-function App() {
+// User Layout
+const UserLayout = () => {
   return (
     <>
-      <RouterProvider router={router}/>
+      <ScrollToTop />
+      <ToastContainer />
+      <div className="2xl:max-w-[2200px] mx-auto min-h-screen flex flex-col">
+        <Header />
+        <Hubspot />
+        <div className="flex-1">
+          <Outlet />
+        </div>
+        <Footer />
+      </div>
     </>
-  )
+  );
+};
+
+function App() {
+  const [isAdminView, setIsAdminView] = useState(false); //  admin view
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: isAdminView ? <AdminLayout /> : <UserLayout />,
+      children: [
+        // User Routes
+        ...(!isAdminView
+          ? [
+              { path: "/", element: <Suspense fallback={<PageLoader/>}><Home /></Suspense> },
+              { path: "/login", element: <Suspense fallback={<PageLoader/>}><LoginPage /></Suspense> },
+              { path: "/about-us", element: <Suspense fallback={<PageLoader/>}><About /></Suspense> },
+              { path: "/contact-us", element: <Suspense fallback={<PageLoader/>}><Contact /></Suspense> },
+              { path: "/our-videos", element: <Suspense fallback={<PageLoader/>}><OurVideos /></Suspense> },
+              { path: "/shop", element: <Suspense fallback={<PageLoader/>}><Shop /></Suspense> },
+              { path: "/shop/:title", element: <Suspense fallback={<PageLoader/>}><Product /></Suspense> },
+              { path: "/orders", element: <Suspense fallback={<PageLoader/>}><Orders /></Suspense> },
+              { path: "/under-construction", element: <Suspense fallback={<PageLoader/>}><Construct /></Suspense> },
+              { path: "/profile", element: <Suspense fallback={<PageLoader/>}><Profile /></Suspense> },
+              { path: "*", element: <Suspense fallback={<PageLoader/>}><PagenotFound/></Suspense> },
+            ]
+          : []),
+        // Admin Routes
+        ...(isAdminView
+          ? [
+              { path: "/", element: <Suspense fallback={<PageLoader/>}><AdminLogin /></Suspense> },
+              { path: "*", element: <Suspense fallback={<PageLoader/>}><p className="text-xl font-medium animate-bounce">Page not Found🙈</p></Suspense> },
+              { path: "/dashboard", element: <Suspense fallback={<PageLoader/>}><Dashboard /></Suspense> },
+              { path: "/orders", element: <Suspense fallback={<PageLoader/>}><AdminOrders /></Suspense> },
+              { path: "/order/:id", element: <Suspense fallback={<PageLoader/>}><AdminOrder /></Suspense> },
+              { path: "/products", element: <Suspense fallback={<PageLoader/>}><AdminProducts /></Suspense> },
+              { path: "/add-product", element: <Suspense fallback={<PageLoader/>}><AddProduct /></Suspense> },
+            ]
+          : []),
+      ],
+    },
+  ]);
+
+  return (
+    <>
+
+      <RouterProvider router={router} />
+    </>
+  );
 }
 
-export default App
+export default App;
