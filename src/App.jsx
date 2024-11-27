@@ -23,6 +23,7 @@ const LoginPage = lazy(() => import("./pages/loginPage"));
 const Construct = lazy(() => import("./pages/constr"));
 const Profile = lazy(() => import("./pages/profile"));
 const PagenotFound = lazy(() => import("./pages/pageNot"));
+const OTP = lazy(() => import("./pages/otp"));
 
 // Admin Pages
 
@@ -110,6 +111,7 @@ function App() {
               { path: "/orders", element: <Suspense fallback={<PageLoader/>}><Orders /></Suspense> },
               { path: "/under-construction", element: <Suspense fallback={<PageLoader/>}><Construct /></Suspense> },
               { path: "/profile", element: <Suspense fallback={<PageLoader/>}><Profile /></Suspense> },
+              { path: "/otp", element: <Suspense fallback={<PageLoader/>}><OTP /></Suspense> },
               { path: "*", element: <Suspense fallback={<PageLoader/>}><PagenotFound/></Suspense> },
             ]
           : []),

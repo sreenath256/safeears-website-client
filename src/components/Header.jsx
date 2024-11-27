@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { FaCartShopping } from "react-icons/fa6";
 import { HiOutlineMenuAlt1 } from "react-icons/hi";
 import { BsCart4 } from "react-icons/bs";
+import { AiOutlineLogin } from "react-icons/ai";
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { MdClose } from 'react-icons/md';
@@ -22,7 +23,7 @@ const Header = () => {
   const { pathname } = useLocation();
   if (pathname === "/login") return null;
   const currentPathname = location.pathname;
-  const [isAdminView, setIsAdminView] = useState(false); //  admin view
+  const [isAdminView, setIsAdminView] = useState(true); //  admin view
   const [open, setOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const menuRef = useRef(null);
@@ -94,19 +95,27 @@ const Header = () => {
           </ul>
          <div className='hidden lg:block'>
           {!isAdminView ? (
-              <div className='flex gap-5 items-center text-base font-bold uppercase text-white'>
-              <Link to={'/login'}>Login / Sign Up</Link>
-              <Link>track your order</Link>
-              <Link className='ml-40 xl:ml-10 relative'>
-                <span className='bg-black text-white h-5 w-5 absolute -top-4 rounded-full grid place-items-center left-2 text-xs'>3</span>
-                <BsCart4 onClick={toggleCart} className='text-3xl'/>
-              </Link>
-            </div>
+            <>
+            <Link to={'/login'} className='flex gap-1 bg-main hover:bg-yellow-600 duration-200 px-8 cursor-pointer text-sm py-2 rounded-full items-center justify-center font-medium uppercase text-white'>
+              <p>Login</p>
+              <AiOutlineLogin className='text-lg'/>
+            </Link>
+      
+            </>
+            
             ) :  (
-              <div className='flex gap-3 items-center uppercase text-sm'>
+             <>
+              <div className='flex gap-10 items-center uppercase text-sm'>
+               <div className='flex items-center gap-1'>
                 <Link to='/profile'><img className='h-10 w-10 rounded-full object-cover border-2' src="https://images.pexels.com/photos/3785077/pexels-photo-3785077.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" /></Link>
-                <Link to='/profile'>My Account</Link>
+                  <Link to='/profile'>My Account</Link>
+               </div>
+                <div className='mt-5 relative'>
+                       <span className='bg-black text-white h-5 w-5 absolute -top-4 rounded-full grid place-items-center left-2 text-xs'>3</span>
+                       <BsCart4 onClick={toggleCart} className='text-3xl'/>
+                </div>
               </div>
+             </>
             ) }
          </div>
           
@@ -155,18 +164,20 @@ const Header = () => {
                ))}
                 <div className=''>
                   {!isAdminView ? (
-                     <div className='flex flex-col gap-5 items-center'>
-                     <Link to={'/login'}>Login / Sign Up</Link>
-                     <Link>track your order</Link>
-                     <Link className='mt-5 relative'>
-                       <span className='bg-black text-white h-5 w-5 absolute -top-4 rounded-full grid place-items-center left-2 text-xs'>3</span>
-                       <BsCart4 onClick={toggleCart} className='text-3xl'/>
-                     </Link>
-                   </div>
+                  <Link to={'/login'} className='flex gap-1 bg-main hover:bg-yellow-600 duration-200 px-8 cursor-pointer  py-2 rounded-full items-center justify-center font-medium  text-white'>
+                    <p>Login</p>
+                    <AiOutlineLogin className='text-lg'/>
+                  </Link>
                     ) :  (
+                      <div className='flex flex-col items-center gap-5'>
                       <div className='flex gap-3 items-center '>
                         <Link to='/profile'><img className='h-10 w-10 rounded-full object-cover border-2' src="https://images.pexels.com/photos/3785077/pexels-photo-3785077.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" /></Link>
                         <Link to='/profile'>My Account</Link>
+                      </div>
+                      <div className='mt-5 relative'>
+                            <span className='bg-black text-white h-5 w-5 absolute -top-4 rounded-full grid place-items-center left-2 text-xs'>3</span>
+                            <BsCart4 onClick={toggleCart} className='text-3xl'/>
+                      </div>
                       </div>
                     ) }
                 </div>

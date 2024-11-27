@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  TablePagination,
-} from '@mui/material';
+import { FaAngleDown } from "react-icons/fa";
+import { FaAngleUp } from "react-icons/fa";
+
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState('profile'); // Manage active tab state
@@ -47,48 +40,60 @@ const Profile = () => {
     alert('Profile updated successfully!');
     // Logic to send data to the server goes here
   };
-  // Pagination state
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  
 
   // Mock orders data
   const orders = [
-    { id: 1, product: 'Laptop', date: '2024-11-20', status: 'Delivered', price: '$1200' },
-    { id: 2, product: 'Phone', date: '2024-11-15', status: 'In Transit', price: '$800' },
-    { id: 3, product: 'Headphones', date: '2024-11-10', status: 'Delivered', price: '$150' },
-    { id: 4, product: 'Keyboard', date: '2024-11-08', status: 'Shipped', price: '$50' },
-    { id: 5, product: 'Mouse', date: '2024-11-06', status: 'Pending', price: '$30' },
-    { id: 6, product: 'Monitor', date: '2024-11-04', status: 'Delivered', price: '$300' },
-    { id: 7, product: 'Chair', date: '2024-11-02', status: 'Pending', price: '$100' },
+    {
+      id: 1,
+      product: 'Laptop',
+      date: '2024-11-20',
+      status: 'Delivered',
+      price: '$1200',
+      listPrice: '$1500',
+      sellingPrice: '$1200',
+      offerPrice: '$300 off',
+      totalAmount: '$1200',
+      size: '15 inches',
+      color: 'Silver',
+      deliveryAddress: '123 Main Street, Springfield, USA',
+      image: 'https://via.placeholder.com/100',
+    },
+    {
+      id: 2,
+      product: 'Phone',
+      date: '2024-11-15',
+      status: 'In Transit',
+      price: '$800',
+      listPrice: '$900',
+      sellingPrice: '$800',
+      offerPrice: '$100 off',
+      totalAmount: '$800',
+      size: '6.5 inches',
+      color: 'Black',
+      deliveryAddress: '456 Elm Street, Metropolis, USA',
+      image: 'https://via.placeholder.com/100',
+    },
+    {
+      id: 3,
+      product: 'Headphones',
+      date: '2024-11-10',
+      status: 'Delivered',
+      price: '$150',
+      listPrice: '$200',
+      sellingPrice: '$150',
+      offerPrice: '$50 off',
+      totalAmount: '$150',
+      size: 'Universal',
+      color: 'Blue',
+      deliveryAddress: '789 Pine Street, Gotham, USA',
+      image: 'https://via.placeholder.com/100',
+    },
   ];
 
-  // Handle page change
-  const handlePageChange = (event, newPage) => {
-    setPage(newPage);
-  };
+  const [expandedOrderId, setExpandedOrderId] = useState(null);
 
-  // Handle rows per page change
-  const handleRowsPerPageChange = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  // Status color mapping
-  const getStatusColor = (status) => {
-    switch (status) {
-      case 'Delivered':
-        return 'bg-green-500 text-white';
-      case 'In Transit':
-        return 'bg-yellow-500 text-black';
-      case 'Pending':
-        return 'bg-red-500 text-white';
-      case 'Shipped':
-        return 'bg-blue-500 text-white';
-      default:
-        return 'bg-gray-500 text-white';
-    }
+  const toggleOrderDetails = (id) => {
+    setExpandedOrderId((prevId) => (prevId === id ? null : id));
   };
 
   return (
@@ -115,14 +120,14 @@ const Profile = () => {
 
       {/* Tab Content */}
       <div className="p-4">
-      {activeTab === 'profile' && (
+        {activeTab === 'profile' && (
           <div>
             <h2 className="text-2xl font-bold mb-4">Your Profile</h2>
             <form onSubmit={handleSubmit} className="space-y-4 text-white">
               <div className="flex flex-col md:flex-row md:items-center gap-5">
                 <img
                   className="h-40 w-40 rounded-md border-2 object-cover"
-                  src={`https://images.pexels.com/photos/3785077/pexels-photo-3785077.jpeg?auto=compress&cs=tinysrgb&w=600 || ${profileData.profile}`}
+                  src={profileData.profile}
                   alt="Profile"
                 />
                 <label className="block">
@@ -139,46 +144,21 @@ const Profile = () => {
                   />
                 </label>
               </div>
-              <div>
-                <label className="block font-semibold mb-1">Name:</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={profileData.name}
-                  onChange={handleInputChange}
-                  className="w-full p-2 border border-gray-300 rounded-md  outline-none focus:outline-none focus:ring-2 focus:ring-main"
-                />
-              </div>
-              <div>
-                <label className="block font-semibold mb-1">Email:</label>
-                <input
-                  type="email"
-                  name="email"
-                  value={profileData.email}
-                  onChange={handleInputChange}
-                  className="w-full p-2 border border-gray-300 rounded-md  outline-none focus:outline-none focus:ring-2 focus:ring-main"
-                />
-              </div>
-              <div>
-                <label className="block font-semibold mb-1">Mobile:</label>
-                <input
-                  type="text"
-                  name="mobile"
-                  value={profileData.mobile}
-                  onChange={handleInputChange}
-                  className="w-full p-2 border border-gray-300 rounded-md  outline-none focus:outline-none focus:ring-2 focus:ring-main"
-                />
-              </div>
-              <div>
-                <label className="block font-semibold mb-1">Address:</label>
-                <textarea
-                  name="address"
-                  value={profileData.address}
-                  onChange={handleInputChange}
-                  className="w-full p-2 border bg-transparent border-gray-300 rounded-md  outline-none focus:outline-none focus:ring-2 focus:ring-main"
-                  rows="3"
-                ></textarea>
-              </div>
+              {/* Profile fields */}
+              {['name', 'email', 'mobile', 'address'].map((field) => (
+                <div key={field}>
+                  <label className="block font-semibold mb-1">
+                    {field.charAt(0).toUpperCase() + field.slice(1)}:
+                  </label>
+                  <input
+                    type={field === 'email' ? 'email' : 'text'}
+                    name={field}
+                    value={profileData[field]}
+                    onChange={handleInputChange}
+                    className="w-full p-2 border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-main"
+                  />
+                </div>
+              ))}
               <button
                 type="submit"
                 className="px-6 py-2 bg-main text-white rounded-md hover:bg-main-dark"
@@ -188,51 +168,64 @@ const Profile = () => {
             </form>
           </div>
         )}
-        {activeTab === 'orders' && (
-          <div>
-            <h2 className="text-2xl font-semibold mb-4">Your Orders</h2>
-            <div className='bg-white'>
-            <TableContainer component={Paper}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>#</TableCell>
-                    <TableCell>Product</TableCell>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Status</TableCell>
-                    <TableCell>Price</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {orders
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((order) => (
-                      <TableRow key={order.id}>
-                        <TableCell>{order.id}</TableCell>
-                        <TableCell>{order.product}</TableCell>
-                        <TableCell>{order.date}</TableCell>
-                        <TableCell>
-                          <span
-                            className={`px-3 py-1 rounded-full ${getStatusColor(order.status)}`}
-                          >
-                            {order.status}
-                          </span>
-                        </TableCell>
-                        <TableCell>{order.price}</TableCell>
-                      </TableRow>
-                    ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 15]}
-              component="div"
-              count={orders.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handlePageChange}
-              onRowsPerPageChange={handleRowsPerPageChange}
-            />
+        {/* Orders Tab */}
+      {activeTab === 'orders' && (
+        <div>
+          <h2 className="text-2xl font-semibold mb-4">Your Orders</h2>
+          <div className="space-y-4">
+            {orders.map((order) => (
+              <div
+                key={order.id}
+                className="px-4 py-2 border rounded-md bg-white hover:bg-gray-100 duration-200 text-black cursor-pointer"
+                onClick={() => toggleOrderDetails(order.id)}
+              >
+                <div className="flex justify-between items-center selection:bg-none">
+                  <div className="flex items-center gap-5">
+                    <h3 className="text-lg font-medium">{order.product}</h3>
+                    <img
+                      src={order.image}
+                      alt={order.product}
+                      className="w-16 h-16 rounded-md"
+                    />
+                  </div>
+                  <button
+                    className="text-sm capitalize flex items-center gap-1 transition-all duration-200"
+                    onClick={() => toggleOrderDetails(order.id)}
+                  >
+                    {expandedOrderId === order.id ? (
+                      <>
+                        show less <FaAngleUp />
+                      </>
+                    ) : (
+                      <>
+                        show more <FaAngleDown />
+                      </>
+                    )}
+                  </button>
+                </div>
+                <div
+                  className={`overflow-hidden transition-[max-height] duration-300 ease-in-out ${
+                    expandedOrderId === order.id ? 'max-h-[500px]' : 'max-h-0'
+                  }`}
+                >
+                    <div className="mt-5">
+                      <div className="my-5 h-[1px] bg-gray-300" />
+                      <p><strong>Size:</strong> {order.size}</p>
+                      <p><strong>Color:</strong> {order.color}</p>
+                      <p><strong>Delivery Address:</strong> {order.deliveryAddress}</p>
+                      <p><strong>List Price:</strong> {order.listPrice}</p>
+                      <p><strong>Selling Price:</strong> {order.sellingPrice}</p>
+                      <p><strong>Offer Price:</strong> {order.offerPrice}</p>
+                      <p><strong>Total Amount:</strong> {order.totalAmount}</p>
+                      <p><strong>Date:</strong> {order.date}</p>
+                      <p><strong>Status:</strong> {order.status}</p>
+                      <button className="bg-main px-10 rounded-md py-2 text-sm text-white hover:text-black duration-150 mt-5">
+                        Track your order
+                      </button>
+                    </div>
+                </div>
+              </div>
+            ))}
             </div>
           </div>
         )}
