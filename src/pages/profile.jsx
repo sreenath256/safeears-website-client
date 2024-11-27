@@ -9,6 +9,7 @@ const Profile = () => {
     profile: 'https://via.placeholder.com/150', // Default profile image
     name: 'John Doe',
     email: 'johndoe@example.com',
+    password: '1234',
     mobile: '+1234567890',
     address: '123 Main Street, Springfield, USA',
   });
@@ -145,13 +146,13 @@ const Profile = () => {
                 </label>
               </div>
               {/* Profile fields */}
-              {['name', 'email', 'mobile', 'address'].map((field) => (
+              {['name', 'email','password', 'mobile', 'address'].map((field) => (
                 <div key={field}>
                   <label className="block font-semibold mb-1">
                     {field.charAt(0).toUpperCase() + field.slice(1)}:
                   </label>
                   <input
-                    type={field === 'email' ? 'email' : 'text'}
+                    type={field}
                     name={field}
                     value={profileData[field]}
                     onChange={handleInputChange}
