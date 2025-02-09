@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 let done = 'https://www.sfu.ca/siat/student_projects/iat339_2022_summer/enoc/P2_thunderousCats/public_html/img/confirmationPage/checkMark.png'
 
-const Success = () => {
+const Construct = () => {
     const navigate = useNavigate();
   return (
     <div className='h-screen w-full flex flex-col justify-center text-center items-center'>
@@ -13,4 +13,4 @@ const Success = () => {
   )
 }
 
-export default Success
+export default Construct

@@ -5,32 +5,37 @@ import { RxDashboard } from "react-icons/rx";
 import { HiOutlineTruck } from "react-icons/hi2";
 import { TbSitemap } from "react-icons/tb";
 import { MdFormatListBulletedAdd } from "react-icons/md";
-
+import { BsCreditCard } from "react-icons/bs";
 
 const adminMenu = [
   {
     label: `dashboard`,
-    url: `/dashboard`,
+    url: ``,
     icon: <RxDashboard />,
   },
   {
     label: `all products`,
-    url: `/products`,
+    url: `products`,
     icon: <TbSitemap />,
   },
   {
     label: `all orders`,
-    url: `/orders`,
+    url: `orders`,
     icon: <HiOutlineTruck />,
   },
   {
     label: `add product`,
-    url: `/add-product`,
+    url: `add-product`,
     icon: <MdFormatListBulletedAdd />,
+  },
+  {
+    label: `Payments`,
+    url: `payments`,
+    icon: <BsCreditCard />,
   },
 ];
 
-export default function Sidebar({ isSidebarOpen, setIsSidebarOpen }) {
+export default function AdminSidebar({ isSidebarOpen, setIsSidebarOpen }) {
   const location = useLocation();
 
   return (

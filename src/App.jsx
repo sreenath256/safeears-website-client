@@ -2,141 +2,225 @@ import "./App.css";
 import { ScrollToTop } from "react-router-scroll-to-top";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
+import "react-loading-skeleton/dist/skeleton.css";
 import {
   createBrowserRouter,
   RouterProvider,
   Outlet,
-  useLocation,
+  Navigate,
+  BrowserRouter,
+  Routes,
+  Route,
 } from "react-router-dom";
-import { Header, Footer, Hubspot,PageLoader } from "./components";
+import { Header, Footer, Hubspot, PageLoader } from "./components";
+import HomePage from "./pages/HomePage";
+import AboutUs from "./pages/AboutUs";
+import ContactUs from "./pages/ContactUs";
+import OurVideos from "./pages/OurVideos";
+import Shop from "./pages/Shop";
+import Construct from "./pages/Construct";
+import Profile from "./pages/Profile";
+import OTP from "./components/OTPSection";
+import LoginPage from "./pages/LoginPage";
+import Orders from "./pages/Orders";
+import PageNotFound from "./pages/PageNotFound";
+import AdminLogin from "./pages/admin/AdminLogin";
+import Dashboard from "./pages/admin/Dashboard";
+import AdminOrders from "./pages/admin/AdminOrders";
+import AdminOrder from "./pages/admin/AdminOrder";
+import AdminProducts from "./pages/admin/AdminProducts";
+import AddProduct from "./pages/admin/AddProduct";
+import AdminSidebar from "./pages/admin/layout/Sidebar";
+import AdminNav from "./pages/admin/layout/Navbar";
+import { useDispatch, useSelector } from "react-redux";
 
-// Pages
-const Home = lazy(() => import("./pages/home"));
-const About = lazy(() => import("./pages/about-us"));
-const Contact = lazy(() => import("./pages/contact-us"));
-const OurVideos = lazy(() => import("./pages/video"));
-const Shop = lazy(() => import("./pages/shop"));
-const Product = lazy(() => import("./pages/product"));
-const Orders = lazy(() => import("./pages/orders"));
-const LoginPage = lazy(() => import("./pages/loginPage"));
-const Construct = lazy(() => import("./pages/constr"));
-const Profile = lazy(() => import("./pages/profile"));
-const PagenotFound = lazy(() => import("./pages/pageNot"));
-const OTP = lazy(() => import("./pages/otp"));
+import ProductPage from "./pages/ProductPage";
+import { getUserDataFirst } from "./redux/actions/userActions";
+import OrderConfirmation from "./pages/OrderConfirmation";
+import OrderHistory from "./pages/OrderHistory";
+import OrderDetail from "./pages/OrderDetail";
+import Payments from "./pages/admin/Payments";
+import Loading from "./components/Loading";
+import { Toaster } from "react-hot-toast";
+import ForgotPassword from "./pages/ForgotPassword";
+import ChangePassword from "./pages/ChangePassword";
 
-// Admin Pages
+// Custom Protected Route Component with Improved Logic
+const ProtectedRoute = ({ element, adminOnly = false }) => {
+  const { user, loading, isAuthenticated } = useSelector((state) => state.user);
 
-const AdminNav = lazy(() => import("./pages/admin/layout/Navbar"));
-const AdminSidebar = lazy(() => import("./pages/admin/layout/Sidebar"));
-const AdminLogin = lazy(() => import("./pages/admin/AdminLogin"));
-const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
-const AdminOrders = lazy(() => import("./pages/admin/Orders"));
-const AdminOrder = lazy(() => import("./pages/admin/Order"));
-const AdminProducts = lazy(() => import("./pages/admin/Products"));
-const AddProduct = lazy(() => import("./pages/admin/AddProduct"));
+  // If still loading user data, show loading
+  if (loading) {
+    return <Loading />;
+  }
+
+  // Check for authentication and role-based access
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // For admin-only routes
+  if (adminOnly && user?.role !== "admin") {
+    return <Navigate to="/" replace />;
+  }
+
+  // Render the element if all checks pass
+  return element;
+};
 
 // Admin Layout
 const AdminLayout = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const location = useLocation();
-
-  // Determine if the current route is the login page
-  const isLoginPage = location.pathname === "/";
-
+  const [isSideBarOpen, setIsSidebarOpen] = useState();
   return (
-    <>
-      <ScrollToTop />
-      <ToastContainer />
-      <div className="flex h-screen bg-gray-100 text-black w-full">
-        {/* Conditionally render Sidebar */}
-        {!isLoginPage && (
-          <AdminSidebar
-            isSidebarOpen={isSidebarOpen}
-            setIsSidebarOpen={setIsSidebarOpen}
-          />
-        )}
-
-        {/* Main Content */}
-        <div className="flex flex-col flex-1 w-full">
-          {/* Conditionally render Top Bar */}
-          {!isLoginPage && <AdminNav setIsSidebarOpen={setIsSidebarOpen} />}
-
-          {/* Main body */}
-          <div className="flex-1 p-4 overflow-y-scroll w-full">
-            <Outlet />
-          </div>
+    <div className="flex h-screen bg-gray-100 text-black w-full">
+      <AdminSidebar />
+      <div className="flex flex-col flex-1 w-full">
+        <AdminNav  setIsSidebarOpen={setIsSidebarOpen} />
+        <div className="flex-1 p-4 overflow-y-scroll w-full">
+          <Outlet />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
 // User Layout
 const UserLayout = () => {
   return (
-    <>
+    <div className="2xl:max-w-[2200px] mx-auto min-h-screen flex flex-col">
       <ScrollToTop />
       <ToastContainer />
-      <div className="2xl:max-w-[2200px] mx-auto min-h-screen flex flex-col">
-        <Header />
-        <Hubspot />
-        <div className="flex-1">
-          <Outlet />
-        </div>
-        <Footer />
+      <Header />
+      <Hubspot />
+      <div className="flex-1">
+        <Outlet />
       </div>
-    </>
+      <Footer />
+    </div>
   );
 };
 
 function App() {
-  const [isAdminView, setIsAdminView] = useState(false); //  admin view
+  const { user, loading } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: isAdminView ? <AdminLayout /> : <UserLayout />,
-      children: [
-        // User Routes
-        ...(!isAdminView
-          ? [
-              { path: "/", element: <Suspense fallback={<PageLoader/>}><Home /></Suspense> },
-              { path: "/login", element: <Suspense fallback={<PageLoader/>}><LoginPage /></Suspense> },
-              { path: "/about-us", element: <Suspense fallback={<PageLoader/>}><About /></Suspense> },
-              { path: "/contact-us", element: <Suspense fallback={<PageLoader/>}><Contact /></Suspense> },
-              { path: "/our-videos", element: <Suspense fallback={<PageLoader/>}><OurVideos /></Suspense> },
-              { path: "/shop", element: <Suspense fallback={<PageLoader/>}><Shop /></Suspense> },
-              { path: "/shop/:title", element: <Suspense fallback={<PageLoader/>}><Product /></Suspense> },
-              { path: "/orders", element: <Suspense fallback={<PageLoader/>}><Orders /></Suspense> },
-              { path: "/under-construction", element: <Suspense fallback={<PageLoader/>}><Construct /></Suspense> },
-              { path: "/profile", element: <Suspense fallback={<PageLoader/>}><Profile /></Suspense> },
-              { path: "/otp", element: <Suspense fallback={<PageLoader/>}><OTP /></Suspense> },
-              { path: "*", element: <Suspense fallback={<PageLoader/>}><PagenotFound/></Suspense> },
-            ]
-          : []),
-        // Admin Routes
-        ...(isAdminView
-          ? [
-              { path: "/", element: <Suspense fallback={<PageLoader/>}><AdminLogin /></Suspense> },
-              { path: "*", element: <Suspense fallback={<PageLoader/>}><p className="text-xl font-medium animate-bounce">Page not Found🙈</p></Suspense> },
-              { path: "/dashboard", element: <Suspense fallback={<PageLoader/>}><Dashboard /></Suspense> },
-              { path: "/orders", element: <Suspense fallback={<PageLoader/>}><AdminOrders /></Suspense> },
-              { path: "/order/:id", element: <Suspense fallback={<PageLoader/>}><AdminOrder /></Suspense> },
-              { path: "/products", element: <Suspense fallback={<PageLoader/>}><AdminProducts /></Suspense> },
-              { path: "/add-product", element: <Suspense fallback={<PageLoader/>}><AddProduct /></Suspense> },
-            ]
-          : []),
-      ],
-    },
-  ]);
+  useEffect(() => {
+    if (!user) {
+      dispatch(getUserDataFirst());
+    }
+  }, [dispatch, user]);
+
+  const ProtectedRoute = ({ element }) => {
+    const { user, loading } = useSelector((state) => state.user);
+
+    return user ? element : <Navigate to="/login" />;
+  };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <>
+      <Toaster position="top-center" />
 
-      <RouterProvider router={router} />
+      <BrowserRouter>
+        {/* {user ? user.role === "user" && <UserLayout /> : <UserLayout />} */}
+
+        <Routes>
+          <Route
+            path="/"
+            element={
+              user ? user.role === "user" && <UserLayout /> : <UserLayout />
+            }
+          >
+            <Route
+              index
+              element={
+                user ? (
+                  user.role === "admin" ? (
+                    <Navigate to="/admin/" />
+                  ) : (
+                    <HomePage />
+                  )
+                ) : (
+                  <HomePage />
+                )
+              }
+            />
+
+            {/* Auth Pages */}
+            <Route path="/login" element={<LoginPage />} />
+            {/* <Route path="register" element={<Register />} /> */}
+            {/* <Route path="otp" element={<ValidateOTP />} />
+          <Route path="forgot-password" element={<ForgetPassword />} /> */}
+
+            {/* General Pages */}
+            <Route path="/contact-us" element={<ContactUs />} />
+            <Route path="/about-us" element={<AboutUs />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/shop/:id" element={<ProductPage />} />
+            <Route path="/our-videos" element={<OurVideos />} />
+            <Route path="/under-construction" element={<Construct />} />
+
+            <Route
+              path="/checkout"
+              element={<ProtectedRoute element={<Orders />} />}
+            />
+            <Route
+              path="/order-confirmation"
+              element={<ProtectedRoute element={<OrderConfirmation />} />}
+            />
+            <Route
+              path="/order-history"
+              element={<ProtectedRoute element={<OrderHistory />} />}
+            />
+            <Route
+              path="/order-history/detail/:id"
+              element={<ProtectedRoute element={<OrderDetail />} />}
+            />
+            <Route
+              path="/edit-profile"
+              element={<ProtectedRoute element={<Profile />} />}
+            />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route
+              path="/change-password"
+              element={<ProtectedRoute element={<ChangePassword />} />}
+            />
+            {/* Admin Routes */}
+            {(user && user.role === "admin") ||
+            (user && user.role === "superAdmin") ? (
+              <Route path="/admin/*" element={<AdminRoutes />} />
+            ) : (
+              <Route path="/admin" element={<Navigate to="/" />} />
+            )}
+
+            <Route path="*" element={<PageNotFound />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }
 
 export default App;
+
+function AdminRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<AdminLayout />}>
+        <Route index element={<Dashboard />} />
+        <Route path="orders" element={<AdminOrders />} />
+        <Route path="order/:id" element={<AdminOrder />} />
+        <Route path="products" element={<AdminProducts />} />
+
+        <Route path="payments" element={<Payments />} />
+        <Route path="add-product" element={<AddProduct />} />
+
+        <Route path="*" element={<PageNotFound />} />
+      </Route>
+    </Routes>
+  );
+}

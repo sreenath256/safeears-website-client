@@ -1,8 +1,18 @@
 import React, { useState } from "react";
 import { IoLogOutOutline } from "react-icons/io5";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../../../redux/actions/userActions";
 
-export default function TopBar({ setIsSidebarOpen }) {
+export default function AdminNav({ setIsSidebarOpen }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    dispatch(logout());
+    navigate("/");
+  };
 
   return (
     <header className="flex items-center justify-between px-4 py-2 bg-black shadow-md lg:justify-end">
@@ -57,13 +67,12 @@ export default function TopBar({ setIsSidebarOpen }) {
 
         {isDropdownOpen && (
           <div className="absolute right-0 w-fit mt-2 bg-white border border-gray-200 rounded-md shadow-lg">
-            
             <button
-              onClick={() => alert("Logged out!")}
+              onClick={handleLogout}
               className="w-full px-4 py-2 text-sm text-left text-red-600 hover:bg-gray-100 flex gap-2 items-center"
             >
               Logout
-              <IoLogOutOutline/>
+              <IoLogOutOutline />
             </button>
           </div>
         )}

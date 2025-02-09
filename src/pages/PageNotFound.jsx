@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const pageNot = () => {
+const PageNotFound = () => {
   return (
     <main class="h-[80vh] w-full flex flex-col justify-center items-center bg-gradient-to-r from-[#007669] via-[#00726f] to-[#006b7c]">
 	<h1 class="text-9xl font-extrabold text-white tracking-widest">404</h1>
@@ -25,4 +25,4 @@ const pageNot = () => {
   )
 }
 
-export default pageNot
+export default PageNotFound
